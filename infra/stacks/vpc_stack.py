@@ -28,25 +28,32 @@ class VPCStack(core.Stack):
             reserved=False,
         )
 
-        private_subnet_b = ec2.SubnetConfiguration(
-            name="private-subnet-b",
-            subnet_type=ec2.SubnetType.ISOLATED,
-            cidr_mask=24,
-            reserved=False,
-        )
+        # print(dir(private_subnet_a.subnet))
 
-        subnets = [public_subnet, private_subnet_a, private_subnet_b]
+        # private_subnet_b = ec2.SubnetConfiguration(
+        #     name="private-subnet-b",
+        #     subnet_type=ec2.SubnetType.ISOLATED,
+        #     cidr_mask=24,
+        #     reserved=False,
+        # )
+
+        subnets = [public_subnet, private_subnet_a]
 
         vpc = ec2.Vpc(
             self,
             id="DatabaseVPC",
             cidr="10.0.0.0/16",
-            max_azs=2,
+            max_azs=3,
             nat_gateways=0,
             subnet_configuration=subnets,
             enable_dns_hostnames=True,
             enable_dns_support=True
         )
+
+        # vpc.isolated_subnets[0].instance.add_property_override('availability_zone','eu-west-a')
+        # vpc.isolated_subnets[1].instance.add_property_override('availability_zone','eu-west-b')
+        
+
 
         # setup a bastion host
         # this lives in the public subnet
@@ -103,7 +110,7 @@ class VPCStack(core.Stack):
         self.output_props['vpc']=vpc
         self.output_props['public_subnet']=public_subnet
         self.output_props['private_subnet_a']=private_subnet_a
-        self.output_props['private_subnet_b']=private_subnet_b
+        # self.output_props['private_subnet_b']=private_subnet_b
         self.output_props['bastion']=bastion
 
     @property

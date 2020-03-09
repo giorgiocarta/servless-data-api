@@ -92,8 +92,7 @@ class AuroraDbStack(cdk.Stack):
             # kms_key_id=
             # tags=
         )
-        # self.db.node.add_dependency(subnet_group)
-        # self.db.node.add_dependency(security_group)
+
 
         #secret_attached = secret.attach(target=self)
         #secret.add_target_attachment(id="secret_attachment", target=self.db)
@@ -107,14 +106,6 @@ class AuroraDbStack(cdk.Stack):
         # )
         # secret_attached.node.add_dependency(self.db)
 
-        # core.CfnOutput(
-        #     self,
-        #     id="StackName",
-        #     value=self.stack_name,
-        #     description="Stack Name",
-        #     export_name=f"{self.region}:{self.account}:{self.stack_name}:stack-name"
-        # )
-
         core.CfnOutput(
             self,
             id="DatabaseName",
@@ -122,22 +113,6 @@ class AuroraDbStack(cdk.Stack):
             description="Database Name",
             export_name=f"{self.region}:{self.account}:{self.stack_name}:database-name"
         )
-
-        # core.CfnOutput(
-        #     self,
-        #     id="DatabaseClusterArn",
-        #     value=f"arn:aws:rds:{self.region}:{self.account}:cluster:{self.db.ref}",
-        #     description="Database Cluster Arn",
-        #     export_name=f"{self.region}:{self.account}:{self.stack_name}:database-cluster-arn"
-        # )
-
-        # core.CfnOutput(
-        #     self,
-        #     id="DatabaseSecretArn",
-        #     value=secret.secret_arn,
-        #     description="Database Secret Arn",
-        #     export_name=f"{self.region}:{self.account}:{self.stack_name}:database-secret-arn"
-        # )
 
         core.CfnOutput(
             self,
